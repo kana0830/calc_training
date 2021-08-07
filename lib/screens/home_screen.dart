@@ -6,6 +6,32 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  List<DropdownMenuItem<int>> _menuItems = [];
+  int _numberOfQuestions = 0;
+
+  @override
+  void initState() {
+    super.initState();
+    setMenuItems();
+    _numberOfQuestions = _menuItems[0].value!;
+  }
+
+  void setMenuItems() {
+    _menuItems
+      ..add(DropdownMenuItem(
+        child: Text("10"),
+        value: 10,
+      ))
+      ..add(DropdownMenuItem(
+        child: Text("20"),
+        value: 20,
+      ))
+      ..add(DropdownMenuItem(
+        child: Text("30"),
+        value: 30,
+      ));
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -16,22 +42,34 @@ class _HomeScreenState extends State<HomeScreen> {
             child: Column(
               children: [
                 Image.asset("assets/images/image_title.png"),
+                SizedBox(
+                  height: 80.0,
+                ),
                 Text("問題数を選択して「スタート」ボタンを押してください"),
-                //TODO プルダウン選択肢
+                SizedBox(
+                  height: 100.0,
+                ),
+                DropdownButton(
+                  items: _menuItems,
+                  value: _numberOfQuestions,
+                  onChanged: (value) => print(value.toString()),
+                ),
                 Expanded(
-                    child: Container(
-                        alignment: Alignment.bottomCenter,
-                        child: ElevatedButton.icon(
-                          icon: Icon(Icons.skip_next),
-                          onPressed: () {},
-                          label: Text("スタート"),
-                          style: ElevatedButton.styleFrom(
-                              primary: Colors.brown,
-                              onPrimary: Colors.white,
-                              shape: RoundedRectangleBorder(
-                                  borderRadius:
-                                      BorderRadius.all(Radius.circular(10.0)))),
-                        ))),
+                  child: Container(
+                    alignment: Alignment.bottomCenter,
+                    child: ElevatedButton.icon(
+                      icon: Icon(Icons.skip_next),
+                      onPressed: () {},
+                      label: Text("スタート"),
+                      style: ElevatedButton.styleFrom(
+                          primary: Colors.brown,
+                          onPrimary: Colors.white,
+                          shape: RoundedRectangleBorder(
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(10.0)))),
+                    ),
+                  ),
+                ),
               ],
             ),
           ),

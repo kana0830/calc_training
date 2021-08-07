@@ -1,3 +1,4 @@
+import 'package:calc_training/screens/test_screen.dart';
 import 'package:flutter/material.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -42,24 +43,28 @@ class _HomeScreenState extends State<HomeScreen> {
             child: Column(
               children: [
                 Image.asset("assets/images/image_title.png"),
-                SizedBox(
+                const SizedBox(
                   height: 80.0,
                 ),
-                Text("問題数を選択して「スタート」ボタンを押してください"),
-                SizedBox(
+                const Text("問題数を選択して「スタート」ボタンを押してください"),
+                const SizedBox(
                   height: 100.0,
                 ),
                 DropdownButton(
                   items: _menuItems,
                   value: _numberOfQuestions,
-                  onChanged: (value) => print(value.toString()),
+                  onChanged: (int? selectedValue) {
+                    setState(() {
+                      _numberOfQuestions = selectedValue!;
+                    });
+                  },
                 ),
                 Expanded(
                   child: Container(
                     alignment: Alignment.bottomCenter,
                     child: ElevatedButton.icon(
                       icon: Icon(Icons.skip_next),
-                      onPressed: () {},
+                      onPressed: () => startTestScreen(),
                       label: Text("スタート"),
                       style: ElevatedButton.styleFrom(
                           primary: Colors.brown,
@@ -76,5 +81,13 @@ class _HomeScreenState extends State<HomeScreen> {
         ),
       ),
     );
+  }
+
+  startTestScreen() {
+    Navigator.push(
+        context,
+        MaterialPageRoute(
+            builder: (context) =>
+                TestScreen(numberOfQuestions: _numberOfQuestions)));
   }
 }
